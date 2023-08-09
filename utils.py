@@ -231,6 +231,19 @@ def mean_average_precision(
 
     return sum(average_precisions) / len(average_precisions)
 
+def denormalise(tensor):
+    result = tensor.clone().detach().requires_grad_(False)
+    for t, m, s in zip(result, config.mean, config.std):
+        t.mul_(s).add_(m)
+    return result
+
+
+def show_transform(img):
+    img = denormalise(img)
+    if len(config.mean) == 3:
+        return img.permute(1, 2, 0)
+    else:
+        return img.squeeze(0)
 
 def plot_image(image, boxes):
     """Plots predicted bounding boxes on the image"""
