@@ -3,11 +3,23 @@ import cv2
 import torch
 
 from albumentations.pytorch import ToTensorV2
-from utils import seed_everything
+#from utils import seed_everything
 
-DATASET = 'PASCAL_VOC'
+
+def seed_everything(seed=42):
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    # torch.backends.cudnn.deterministic = True
+    # torch.backends.cudnn.benchmark = False
+
+
+DATASET = '../../input/pascal-voc-dataset-used-in-yolov3-video/PASCAL_VOC'
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-# seed_everything()  # If you want deterministic behavior
+seed_everything()  # If you want deterministic behavior
 NUM_WORKERS = 0
 BATCH_SIZE = 32
 IMAGE_SIZE = 416

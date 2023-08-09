@@ -523,18 +523,6 @@ def plot_couple_examples(model, loader, thresh, iou_thresh, anchors):
         plot_image(x[i].permute(1,2,0).detach().cpu(), nms_boxes)
 
 
-
-def seed_everything(seed=42):
-    os.environ['PYTHONHASHSEED'] = str(seed)
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-
-
 def clip_coords(boxes, img_shape):
     # Clip bounding xyxy bounding boxes to image shape (height, width)
     boxes[:, 0].clamp_(0, img_shape[1])  # x1
